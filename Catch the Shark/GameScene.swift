@@ -18,6 +18,8 @@ class GameScene: SKScene {
         }
     }
     
+    var livesImages = [SKSpriteNode]()
+    var lives = 3
     
     override func didMove(to view: SKView) {
         
@@ -36,6 +38,7 @@ class GameScene: SKScene {
         createSlices()
     }
     
+    
     func createScore() {
         
         gameScore = SKLabelNode(fontNamed: "Chalkduster")
@@ -45,11 +48,16 @@ class GameScene: SKScene {
         
         gameScore.position = CGPoint(x: 8, y: 8)
         score = 0 //triggering the didSet
-        
     }
     
     func  createLives() {
         
+        for i in 0..<3 {
+            let spriteNode = SKSpriteNode(imageNamed: "slicedLife")
+            spriteNode.position = CGPoint(x: CGFloat(834 + (i * 70)), y: 720)
+            addChild(spriteNode)
+            livesImages.append(spriteNode)
+        }
     }
     
     func createSlices() {
