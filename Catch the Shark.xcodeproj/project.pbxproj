@@ -17,6 +17,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EE4047F724D7277600844AFC /* explosion.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = explosion.caf; sourceTree = "<group>"; };
+		EE4047F824D7277600844AFC /* swoosh3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = swoosh3.caf; sourceTree = "<group>"; };
+		EE4047F924D7277600844AFC /* sliceHitEnemy.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = sliceHitEnemy.sks; sourceTree = "<group>"; };
+		EE4047FA24D7277600844AFC /* swoosh1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = swoosh1.caf; sourceTree = "<group>"; };
+		EE4047FB24D7277600844AFC /* whack.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whack.caf; sourceTree = "<group>"; };
+		EE4047FC24D7277600844AFC /* wrong.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = wrong.caf; sourceTree = "<group>"; };
+		EE4047FD24D7277600844AFC /* sliceFuse.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = sliceFuse.sks; sourceTree = "<group>"; };
+		EE4047FE24D7277600844AFC /* sliceHitBomb.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = sliceHitBomb.sks; sourceTree = "<group>"; };
+		EE4047FF24D7277600844AFC /* launch.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = launch.caf; sourceTree = "<group>"; };
+		EE40480024D7277700844AFC /* swoosh2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = swoosh2.caf; sourceTree = "<group>"; };
+		EE40480124D7277700844AFC /* sliceBombFuse.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sliceBombFuse.caf; sourceTree = "<group>"; };
 		EEC5117724D58F4C003062A1 /* Catch the Shark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Catch the Shark.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEC5117A24D58F4C003062A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EEC5117C24D58F4C003062A1 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -66,6 +77,17 @@
 				EEC5118724D58F83003062A1 /* Assets.xcassets */,
 				EEC5118924D58F83003062A1 /* LaunchScreen.storyboard */,
 				EEC5118C24D58F84003062A1 /* Info.plist */,
+				EE4047F724D7277600844AFC /* explosion.caf */,
+				EE4047FF24D7277600844AFC /* launch.caf */,
+				EE40480124D7277700844AFC /* sliceBombFuse.caf */,
+				EE4047FD24D7277600844AFC /* sliceFuse.sks */,
+				EE4047FE24D7277600844AFC /* sliceHitBomb.sks */,
+				EE4047F924D7277600844AFC /* sliceHitEnemy.sks */,
+				EE4047FA24D7277600844AFC /* swoosh1.caf */,
+				EE40480024D7277700844AFC /* swoosh2.caf */,
+				EE4047F824D7277600844AFC /* swoosh3.caf */,
+				EE4047FB24D7277600844AFC /* whack.caf */,
+				EE4047FC24D7277600844AFC /* wrong.caf */,
 			);
 			path = "Catch the Shark";
 			sourceTree = "<group>";
@@ -298,7 +320,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.MeerkatWorks.Catch-the-Shark";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -316,7 +338,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.MeerkatWorks.Catch-the-Shark";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
