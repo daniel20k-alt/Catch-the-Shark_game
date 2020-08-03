@@ -21,6 +21,9 @@ class GameScene: SKScene {
     var livesImages = [SKSpriteNode]()
     var lives = 3
     
+    var activeSlice1: SKShapeNode!
+    var activeSlice2: SKShapeNode!
+    
     override func didMove(to view: SKView) {
         
         let background = SKSpriteNode(imageNamed: "sea_background")
@@ -53,7 +56,7 @@ class GameScene: SKScene {
     func  createLives() {
         
         for i in 0..<3 {
-            let spriteNode = SKSpriteNode(imageNamed: "slicedLife")
+            let spriteNode = SKSpriteNode(imageNamed: "LifeGone")
             spriteNode.position = CGPoint(x: CGFloat(834 + (i * 70)), y: 720)
             addChild(spriteNode)
             livesImages.append(spriteNode)
@@ -61,8 +64,24 @@ class GameScene: SKScene {
     }
     
     func createSlices() {
+     
+        activeSlice1 = SKShapeNode()
+        activeSlice1.zPosition = 2
+        activeSlice1.strokeColor = UIColor(red: 46, green: 134, blue: 222, alpha: 1)
+        activeSlice1.lineWidth = 9
         
+        activeSlice2 = SKShapeNode()
+        activeSlice2.zPosition = 3
+        activeSlice2.strokeColor = UIColor(red: 84, green: 160, blue: 255, alpha: 1)
+        activeSlice2.lineWidth = 5
+        
+        addChild(activeSlice1)
+        addChild(activeSlice2)
+    
+       /* see these pallettes, all are blue-ish
+        rgb(46, 134, 222)
+        rgb(72, 219, 251)
+        rgb(84, 160, 255)
+         generator at https://flatuicolors.com/palette/ca */
     }
-    
-    
 }
