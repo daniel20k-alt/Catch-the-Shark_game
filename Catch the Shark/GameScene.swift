@@ -104,6 +104,7 @@ class GameScene: SKScene {
             
             let randomNumber = Int.random(in: 1...3)
             let soundName = "swoosh\(randomNumber).caf"
+            print(soundName)
             
             let swooshSound = SKAction.playSoundFileNamed(soundName, waitForCompletion: true)
             

@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE84B4BB24D9233300C91CE8 /* swoosh1.caf in Resources */ = {isa = PBXBuildFile; fileRef = EE4047FA24D7277600844AFC /* swoosh1.caf */; };
+		EE84B4BC24D9233700C91CE8 /* swoosh2.caf in Resources */ = {isa = PBXBuildFile; fileRef = EE40480024D7277700844AFC /* swoosh2.caf */; };
+		EE84B4BD24D9233A00C91CE8 /* swoosh3.caf in Resources */ = {isa = PBXBuildFile; fileRef = EE4047F824D7277600844AFC /* swoosh3.caf */; };
+		EE84B4BE24D9233D00C91CE8 /* whack.caf in Resources */ = {isa = PBXBuildFile; fileRef = EE4047FB24D7277600844AFC /* whack.caf */; };
+		EE84B4BF24D9236300C91CE8 /* wrong.caf in Resources */ = {isa = PBXBuildFile; fileRef = EE4047FC24D7277600844AFC /* wrong.caf */; };
+		EE84B4C024D9236800C91CE8 /* sliceBombFuse.caf in Resources */ = {isa = PBXBuildFile; fileRef = EE40480124D7277700844AFC /* sliceBombFuse.caf */; };
+		EE84B4C124D9236B00C91CE8 /* launch.caf in Resources */ = {isa = PBXBuildFile; fileRef = EE4047FF24D7277600844AFC /* launch.caf */; };
+		EE84B4C224D9236F00C91CE8 /* explosion.caf in Resources */ = {isa = PBXBuildFile; fileRef = EE4047F724D7277600844AFC /* explosion.caf */; };
 		EEC5117B24D58F4C003062A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC5117A24D58F4C003062A1 /* AppDelegate.swift */; };
 		EEC5117D24D58F4C003062A1 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = EEC5117C24D58F4C003062A1 /* GameScene.sks */; };
 		EEC5118124D58F4C003062A1 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC5118024D58F4C003062A1 /* GameScene.swift */; };
@@ -150,10 +158,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE84B4C024D9236800C91CE8 /* sliceBombFuse.caf in Resources */,
+				EE84B4C124D9236B00C91CE8 /* launch.caf in Resources */,
 				EEC5118624D58F4C003062A1 /* Main.storyboard in Resources */,
+				EE84B4BB24D9233300C91CE8 /* swoosh1.caf in Resources */,
+				EE84B4BC24D9233700C91CE8 /* swoosh2.caf in Resources */,
 				EEC5117D24D58F4C003062A1 /* GameScene.sks in Resources */,
+				EE84B4C224D9236F00C91CE8 /* explosion.caf in Resources */,
+				EE84B4BF24D9236300C91CE8 /* wrong.caf in Resources */,
 				EEC5118824D58F83003062A1 /* Assets.xcassets in Resources */,
 				EEC5118B24D58F84003062A1 /* LaunchScreen.storyboard in Resources */,
+				EE84B4BD24D9233A00C91CE8 /* swoosh3.caf in Resources */,
+				EE84B4BE24D9233D00C91CE8 /* whack.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
