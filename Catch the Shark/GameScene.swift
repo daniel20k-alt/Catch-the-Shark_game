@@ -6,7 +6,12 @@
 //  Copyright © 2020 MeerkatWorks. All rights reserved.
 //
 
+import AVFoundation
 import SpriteKit
+
+enum ForceSharks {
+    case never, always, random
+}
 
 class GameScene: SKScene {
     
@@ -26,6 +31,8 @@ class GameScene: SKScene {
     
     var activeSlicePoints = [CGPoint]()
     var isSwooshSoundActive = false
+    var activeEnemies = [SKSpriteNode]()
+    var sharkSoundEffect: AVAudioPlayer?
     
     override func didMove(to view: SKView) {
         
@@ -67,7 +74,7 @@ class GameScene: SKScene {
     }
     
     func createSlices() {
-     
+        
         activeSlice1 = SKShapeNode()
         activeSlice1.zPosition = 2
         activeSlice1.strokeColor = UIColor(red: 72, green: 219, blue: 251, alpha: 1)
@@ -80,11 +87,11 @@ class GameScene: SKScene {
         
         addChild(activeSlice1)
         addChild(activeSlice2)
-    
-       /* see these pallettes, all are blue-ish
-        rgb(46, 134, 222)
-        rgb(72, 219, 251)
-        rgb(84, 160, 255)
+        
+        /* see these pallettes, all are blue-ish
+         rgb(46, 134, 222)
+         rgb(72, 219, 251)
+         rgb(84, 160, 255)
          generator at https://flatuicolors.com/palette/ca */
     }
     
@@ -98,21 +105,20 @@ class GameScene: SKScene {
             playSwooshSound()
         }
     }
+    
+    func playSwooshSound() {
+        isSwooshSoundActive = true
         
-        func playSwooshSound() {
-            isSwooshSoundActive = true
-            
-            let randomNumber = Int.random(in: 1...3)
-            let soundName = "swoosh\(randomNumber).caf"
-            print(soundName)
-            
-            let swooshSound = SKAction.playSoundFileNamed(soundName, waitForCompletion: true)
-            
-            //this ensure that no multiple sounds are played at once
-            run(swooshSound) { [weak self] in
-                self?.isSwooshSoundActive = false
-            }
+        let randomNumber = Int.random(in: 1...3)
+        let soundName = "swoosh\(randomNumber).caf"
+        
+        let swooshSound = SKAction.playSoundFileNamed(soundName, waitForCompletion: true)
+        
+        //this ensure that no multiple sounds are played at once
+        run(swooshSound) { [weak self] in
+            self?.isSwooshSoundActive = false
         }
+    }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         activeSlice1.run(SKAction.fadeOut(withDuration: 0.25))
@@ -134,7 +140,7 @@ class GameScene: SKScene {
         activeSlice1.alpha = 1
         activeSlice2.alpha = 2
     }
-
+    
     // redrawing the sliced shapes
     func redrawActiveSlice() {
         
@@ -157,5 +163,102 @@ class GameScene: SKScene {
         
         activeSlice1.path = path.cgPath
         activeSlice2.path = path.cgPath
+    }
+    
+    func createEnemy(forceSharks: ForceSharks = .random) {
+        
+        let enemy: SKSpriteNode
+        
+        var enemyType = Int.random(in: 1...10)
+        
+        if forceSharks == .never {
+            enemyType = 1
+        } else if forceSharks == .always {
+            enemyType = 0
+        }
+        
+        if enemyType == 0 {
+            
+            enemy = SKSpriteNode()
+            enemy.zPosition = 1
+            enemy.name = "sharkContainer"
+            
+            let sharkImage = SKSpriteNode(imageNamed: "shark")
+            sharkImage.name = "shark"
+            enemy.addChild(sharkImage)
+            
+            if sharkSoundEffect != nil {
+                sharkSoundEffect?.stop()
+                sharkSoundEffect = nil
+            }
+            
+            if let path = Bundle.main.url(forResource: "slicingFuse", withExtension: ".caf") {
+                if let sound = try? AVAudioPlayer(contentsOf: path) {
+                    sharkSoundEffect = sound
+                    sound.play()
+                }
+            }
+            
+            if let emitter = SKEmitterNode(fileNamed: "sliceFuse") {
+                emitter.position = CGPoint(x: 76, y: 64)
+                enemy.addChild(emitter)
+            }
+            
+            
+        } else {
+            var randomImageNo = Int.random(in: 1...3)
+            enemy = SKSpriteNode(imageNamed: "good\(randomImageNo)")
+            run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
+            enemy.name = "enemy"
+        }
+        
+        //the position of each creature will be here, theoretically
+        
+
+        
+        let randomPosition = CGPoint(x: Int.random(in: 64...960), y: -128)
+        enemy.position = randomPosition
+        
+        let randomAngularVelocity = CGFloat.random(in: -3...3)
+        let randomXVelocity: Int
+        
+        if randomPosition.x < 256 {
+            randomXVelocity = Int.random(in: 8...15)
+        } else if randomPosition.x < 512 {
+            randomXVelocity = Int.random(in: 3...5)
+        } else if randomPosition.x < 768 {
+            randomXVelocity = -Int.random(in: 3...5)
+        } else {
+            randomXVelocity = -Int.random(in: 8...15)
+        }
+        
+        let randomYVelocity = Int.random(in: 24...32)
+        
+    
+        enemy.physicsBody = SKPhysicsBody(circleOfRadius: 64)
+        enemy.physicsBody?.velocity = CGVector(dx: randomXVelocity * 40, dy: randomYVelocity * 40)
+        enemy.physicsBody?.angularVelocity = randomAngularVelocity
+        enemy.physicsBody?.collisionBitMask = 0
+        
+        addChild(enemy)
+        activeEnemies.append(enemy)
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        var sharksOnScreenCount = 0
+        
+        for node in activeEnemies {
+            if node.name == "sharkContainer" {
+                sharksOnScreenCount += 1
+                break
+            }
+        }
+        
+        if sharksOnScreenCount == 0 {
+            // no sounds should be made, at the push sound should be stopped
+        
+            sharkSoundEffect?.stop()
+            sharkSoundEffect = nil
+        }
     }
 }
