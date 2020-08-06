@@ -59,6 +59,18 @@ class GameScene: SKScene {
         createScore()
         createLives()
         createSlices()
+        
+        sequence = [.oneNoShark, .two, .twoWithOneShark, .oneNoShark, .oneNoShark, .chain, .one, .four, .oneNoShark]
+        
+        for _ in 0...1000 {
+            if let nextSequence = SequenceType.allCases.randomElement() {
+                sequence.append(nextSequence)
+            }
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            [weak self] in self?.tossEnemies()
+        }
     }
     
     
@@ -255,6 +267,23 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        
+        if activeEnemies.count > 0 {
+            for (index, node) in activeEnemies.enumerated().reversed() {
+                if node.position.y < -140 {
+                    node.removeFromParent()
+                    activeEnemies.remove(at: index)
+                }
+            }
+        } else {
+            if !nextSequenceQueued {
+                DispatchQueue.main.asyncAfter(deadline: .now() + popupTime) {
+                    [weak self] in self?.tossEnemies()
+                }
+                nextSequenceQueued = true
+            }
+        }
+        
         var sharksOnScreenCount = 0
         
         for node in activeEnemies {
