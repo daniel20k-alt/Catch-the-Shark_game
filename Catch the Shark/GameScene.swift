@@ -13,6 +13,10 @@ enum ForceSharks {
     case never, always, random
 }
 
+enum SequenceType: CaseIterable {
+    case oneNoShark, one, twoWithOneShark, two, three, four, chain, fastChain
+}
+
 class GameScene: SKScene {
     
     var gameScore: SKLabelNode!
@@ -33,6 +37,12 @@ class GameScene: SKScene {
     var isSwooshSoundActive = false
     var activeEnemies = [SKSpriteNode]()
     var sharkSoundEffect: AVAudioPlayer?
+    
+    var popupTime = 0.9 //amount of time waiting from the enemy destroyed and the one created
+    var sequence = [SequenceType]()
+    var sequencePosition = 0 //player position relative to sequence array
+    var chainDelay = 3.0 //time to wait until creating a new enemy
+    var nextSequenceQueued = true
     
     override func didMove(to view: SKView) {
         
@@ -214,7 +224,7 @@ class GameScene: SKScene {
         
         //the position of each creature will be here, theoretically
         
-
+        
         
         let randomPosition = CGPoint(x: Int.random(in: 64...960), y: -128)
         enemy.position = randomPosition
@@ -234,7 +244,7 @@ class GameScene: SKScene {
         
         let randomYVelocity = Int.random(in: 24...32)
         
-    
+        
         enemy.physicsBody = SKPhysicsBody(circleOfRadius: 64)
         enemy.physicsBody?.velocity = CGVector(dx: randomXVelocity * 40, dy: randomYVelocity * 40)
         enemy.physicsBody?.angularVelocity = randomAngularVelocity
@@ -256,9 +266,70 @@ class GameScene: SKScene {
         
         if sharksOnScreenCount == 0 {
             // no sounds should be made, at the push sound should be stopped
-        
+            
             sharkSoundEffect?.stop()
             sharkSoundEffect = nil
         }
+    }
+    
+    func tossEnemies() {
+        popupTime *= 0.991
+        chainDelay *= 0.99
+        physicsWorld.speed *= 1.02
+        
+        let sequenceType = sequence[sequencePosition]
+        
+        switch sequenceType {
+        case .oneNoShark:
+            createEnemy(forceSharks: .never)
+            
+        case .one:
+            createEnemy()
+            
+        case .twoWithOneShark:
+            createEnemy(forceSharks: .never)
+            createEnemy(forceSharks: .always)
+            
+        case .two:
+            createEnemy()
+            createEnemy()
+            
+        case .three:
+            createEnemy()
+            createEnemy()
+            createEnemy()
+            
+        case .four:
+            createEnemy()
+            createEnemy()
+            createEnemy()
+            createEnemy()
+            
+        case .chain:
+            createEnemy()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0)) {
+                [weak self] in self?.createEnemy() }
+            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * 2)) {
+                [weak self] in self?.createEnemy() }
+            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * 3)) {
+                [weak self] in self?.createEnemy() }
+            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * 4)) {
+                [weak self] in self?.createEnemy() }
+            
+        case .fastChain:
+            createEnemy()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0)) {
+                [weak self] in self?.createEnemy() }
+            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0 * 2)) {
+                [weak self] in self?.createEnemy() }
+            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0 * 3)) {
+                [weak self] in self?.createEnemy() }
+            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0 * 4)) {
+                [weak self] in self?.createEnemy() }
+        }
+        sequencePosition += 1
+        nextSequenceQueued = false
     }
 }
