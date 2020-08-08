@@ -44,6 +44,8 @@ class GameScene: SKScene {
     var chainDelay = 3.0 //time to wait until creating a new enemy
     var nextSequenceQueued = true
     
+    var isGameEnded = false
+    
     override func didMove(to view: SKView) {
         
         let background = SKSpriteNode(imageNamed: "sea_background")
@@ -72,7 +74,6 @@ class GameScene: SKScene {
             [weak self] in self?.tossEnemies()
         }
     }
-    
     
     func createScore() {
         
@@ -118,6 +119,8 @@ class GameScene: SKScene {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard isGameEnded == false else { return }
+        
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
         activeSlicePoints.append(location)
@@ -155,7 +158,7 @@ class GameScene: SKScene {
                 }
                 
                 run(SKAction.playSoundFileNamed("whack.caf", waitForCompletion: false))
-             
+                
             } else if node.name == "shark" {
                 //making the shark go away
                 
@@ -166,7 +169,7 @@ class GameScene: SKScene {
                     emitter.position = sharkContainer.position
                     addChild(emitter)
                 }
-
+                
                 node.name = ""
                 sharkContainer.physicsBody?.isDynamic = false
                 
@@ -189,9 +192,22 @@ class GameScene: SKScene {
     }
     
     func endGame(triggeredByShark: Bool) {
+        guard isGameEnded == false else { return }
         
+        isGameEnded = true
+        physicsWorld.speed = 0
+        isUserInteractionEnabled = false
+        
+        sharkSoundEffect?.stop()
+        sharkSoundEffect = nil
+        
+        if triggeredByShark {
+            livesImages[0].texture = SKTexture(imageNamed: "sliceLifeGone")
+            livesImages[1].texture = SKTexture(imageNamed: "sliceLifeGone")
+            livesImages[2].texture = SKTexture(imageNamed: "sliceLifeGone")
+        }
     }
-
+    
     func playSwooshSound() {
         isSwooshSoundActive = true
         
@@ -299,9 +315,6 @@ class GameScene: SKScene {
         }
         
         //the position of each creature will be here, theoretically
-        
-        
-        
         let randomPosition = CGPoint(x: Int.random(in: 64...960), y: -128)
         enemy.position = randomPosition
         
@@ -351,7 +364,7 @@ class GameScene: SKScene {
         life.yScale = 1.3
         life.run(SKAction.scale(to: 1, duration: 0.1))
         
-    
+        
         
     }
     
@@ -403,6 +416,8 @@ class GameScene: SKScene {
     }
     
     func tossEnemies() {
+        guard isGameEnded == false else { return }
+        
         popupTime *= 0.991
         chainDelay *= 0.99
         physicsWorld.speed *= 1.02
