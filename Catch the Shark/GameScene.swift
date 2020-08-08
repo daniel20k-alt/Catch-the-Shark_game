@@ -158,11 +158,40 @@ class GameScene: SKScene {
              
             } else if node.name == "shark" {
                 //making the shark go away
+                
+                guard let sharkContainer = node.parent as? SKSpriteNode else {
+                    continue }
+                
+                if let emitter = SKEmitterNode(fileNamed: "sliceHitBomb") {
+                    emitter.position = sharkContainer.position
+                    addChild(emitter)
+                }
+
+                node.name = ""
+                sharkContainer.physicsBody?.isDynamic = false
+                
+                let scaleOut = SKAction.scale(to: 0.001, duration: 0.2)
+                let fadeOut = SKAction.fadeOut(withDuration: 0.2)
+                let group = SKAction.group([scaleOut, fadeOut])
+                
+                let seq = SKAction.sequence([group, .removeFromParent()])
+                
+                if let index = activeEnemies.firstIndex(of: sharkContainer) {
+                    activeEnemies.remove(at: index)
+                }
+                
+                run(SKAction.playSoundFileNamed("explosaion.caf", waitForCompletion: false))
+                
+                endGame()
             }
             
         }
     }
     
+    func endGame() {
+        
+    }
+
     func playSwooshSound() {
         isSwooshSoundActive = true
         
@@ -301,13 +330,29 @@ class GameScene: SKScene {
         activeEnemies.append(enemy)
     }
     
+    func substractLife () {
+        
+    }
+    
     override func update(_ currentTime: TimeInterval) {
         
         if activeEnemies.count > 0 {
             for (index, node) in activeEnemies.enumerated().reversed() {
                 if node.position.y < -140 {
-                    node.removeFromParent()
-                    activeEnemies.remove(at: index)
+                    node.removeAllActions()
+                    
+                    if node.name == "enemy" {
+                        node.name = ""
+                        substractLife()
+                        
+                        node.removeFromParent()
+                        activeEnemies.remove(at: index)
+                        
+                    } else if node.name == "sharkContainer" {
+                        node.name = ""
+                        node.removeFromParent()
+                        activeEnemies.remove(at: index)
+                    }
                 }
             }
         } else {
