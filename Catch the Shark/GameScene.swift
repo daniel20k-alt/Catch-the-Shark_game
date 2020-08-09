@@ -96,7 +96,7 @@ class GameScene: SKScene {
     }
     
     func createSlices() {
-        
+//TODO: maybe modify color to be transparent or have water bubble particles instead
         activeSlice1 = SKShapeNode()
         activeSlice1.zPosition = 2
         activeSlice1.strokeColor = UIColor(red: 72, green: 219, blue: 251, alpha: 1)
@@ -125,6 +125,7 @@ class GameScene: SKScene {
         activeSlicePoints.append(location)
         redrawActiveSlice()
         
+        //TODO: swoosh sound to be modified with a certain water sound
         if !isSwooshSoundActive {
             playSwooshSound()
         }
@@ -164,7 +165,7 @@ class GameScene: SKScene {
                 guard let sharkContainer = node.parent as? SKSpriteNode else {
                     continue }
                 
-                if let emitter = SKEmitterNode(fileNamed: "sliceHitBomb") {
+                if let emitter = SKEmitterNode(fileNamed: "waves") {
                     emitter.position = sharkContainer.position
                     addChild(emitter)
                 }
@@ -186,7 +187,6 @@ class GameScene: SKScene {
                 
                 endGame(triggeredByShark: true)
             }
-            
         }
     }
     
@@ -211,7 +211,8 @@ class GameScene: SKScene {
         isSwooshSoundActive = true
         
         let randomNumber = Int.random(in: 1...3)
-        let soundName = "swoosh\(randomNumber).caf"
+//        let soundName = "water_flow\(randomNumber).wav"
+        let soundName = "wata.mp3"
         
         let swooshSound = SKAction.playSoundFileNamed(soundName, waitForCompletion: true)
         
