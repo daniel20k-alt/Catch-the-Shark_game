@@ -9,13 +9,13 @@
 import AVFoundation
 import SpriteKit
 
-enum ForceSharks {
-    case never, always, random
-}
+    enum ForceSharks {
+        case never, always, random
+    }
 
-enum SequenceType: CaseIterable {
-    case oneNoShark, one, twoWithOneShark, two, three, four, chain, fastChain
-}
+    enum SequenceType: CaseIterable {
+        case oneNoShark, one, twoWithOneShark, two, three, four, chain, fastChain
+    }
 
 class GameScene: SKScene {
     
@@ -30,8 +30,8 @@ class GameScene: SKScene {
     var livesImages = [SKSpriteNode]()
     var lives = 3
     
-    var activeSlice1: SKShapeNode!
-    var activeSlice2: SKShapeNode!
+    var activeSlice1: SKShapeNode! //TODO: modify this into water bubbles
+    var activeSlice2: SKShapeNode! //TODO: modify this into water bubbles
     
     var activeSlicePoints = [CGPoint]()
     var isSwooshSoundActive = false
@@ -56,7 +56,6 @@ class GameScene: SKScene {
         
         physicsWorld.gravity = CGVector(dx: 0, dy: -6) //-9.8 world default
         physicsWorld.speed = 0.85 // see if this works for underwater
-        
         
         createScore()
         createLives()
@@ -202,9 +201,9 @@ class GameScene: SKScene {
         sharkSoundEffect = nil
         
         if triggeredByShark {
-            livesImages[0].texture = SKTexture(imageNamed: "sliceLifeGone")
-            livesImages[1].texture = SKTexture(imageNamed: "sliceLifeGone")
-            livesImages[2].texture = SKTexture(imageNamed: "sliceLifeGone")
+            livesImages[0].texture = SKTexture(imageNamed: "LifeGone")
+            livesImages[1].texture = SKTexture(imageNamed: "LifeGone")
+            livesImages[2].texture = SKTexture(imageNamed: "LifeGone")
         }
     }
     
@@ -359,7 +358,7 @@ class GameScene: SKScene {
             endGame(triggeredByShark: false)
         }
         
-        life.texture = SKTexture(imageNamed: "sliceLifeGone")
+        life.texture = SKTexture(imageNamed: "LifeGone")
         life.xScale = 1.3
         life.yScale = 1.3
         life.run(SKAction.scale(to: 1, duration: 0.1))
