@@ -9,12 +9,12 @@
 import AVFoundation
 import SpriteKit
 
-    enum ForceSharks {
+    enum ForceEnemies {
         case never, always, random
     }
 
     enum SequenceType: CaseIterable {
-        case oneNoShark, one, twoWithOneShark, two, three, four, chain, fastChain
+        case oneNoEnemy, one, twoWithOneEnemy, two, three, four, chain, fastChain
     }
 
 class GameScene: SKScene {
@@ -35,8 +35,8 @@ class GameScene: SKScene {
     
     var activeSlicePoints = [CGPoint]()
     var isSwooshSoundActive = false
-    var activeEnemies = [SKSpriteNode]()
-    var sharkSoundEffect: AVAudioPlayer?
+    var allActiveAnimals = [SKSpriteNode]()
+    var enemiesSoundEffect: AVAudioPlayer? //to modify later, not sure if it should stay
     
     var popupTime = 0.9 //amount of time waiting from the enemy destroyed and the one created
     var sequence = [SequenceType]()
@@ -47,12 +47,13 @@ class GameScene: SKScene {
     var isGameEnded = false
     
     override func didMove(to view: SKView) {
-        
-        let background = SKSpriteNode(imageNamed: "sea_background")
+    
+        let randomizedBackground = Int.random(in: 1...2) //TODO: change second background dimensions, looks very bad
+        let background = SKSpriteNode(imageNamed: "sea_background\(randomizedBackground)")
         background.position = CGPoint(x: 512, y: 384)
         background.blendMode = .replace
         background.zPosition = -1 // in the back
-        addChild(background) // adding background
+        addChild(background)
         
         physicsWorld.gravity = CGVector(dx: 0, dy: -6) //-9.8 world default
         physicsWorld.speed = 0.85 // see if this works for underwater
@@ -61,7 +62,7 @@ class GameScene: SKScene {
         createLives()
         createSlices()
         
-        sequence = [.oneNoShark, .two, .twoWithOneShark, .oneNoShark, .oneNoShark, .chain, .one, .four, .oneNoShark]
+        sequence = [.oneNoEnemy, .two, .twoWithOneEnemy, .oneNoEnemy, .oneNoEnemy, .chain, .one, .four, .oneNoEnemy]
         
         for _ in 0...1000 {
             if let nextSequence = SequenceType.allCases.randomElement() {
@@ -86,7 +87,6 @@ class GameScene: SKScene {
     }
     
     func  createLives() {
-        
         for i in 0..<3 {
             let spriteNode = SKSpriteNode(imageNamed: "Life")
             spriteNode.position = CGPoint(x: CGFloat(834 + (i * 70)), y: 720)
@@ -144,34 +144,38 @@ class GameScene: SKScene {
                 node.name = ""
                 node.physicsBody?.isDynamic = false
                 
-                let scaleOut = SKAction.scale(to: 0.001, duration: 0.2)
+                let scaleOut = SKAction.scale(to: 0.001, duration: 0.3)
                 let fadeOut = SKAction.fadeOut(withDuration: 0.2)
                 let group = SKAction.group([scaleOut, fadeOut])
+                
+                //aici poate add emitter cu waves
                 
                 let seq = SKAction.sequence([group, .removeFromParent()])
                 node.run(seq)
                 
                 score += 1
                 
-                if let index = activeEnemies.firstIndex(of: node) {
-                    activeEnemies.remove(at: index)
+                if let index = allActiveAnimals.firstIndex(of: node) {
+                    allActiveAnimals.remove(at: index)
                 }
                 
                 run(SKAction.playSoundFileNamed("whack.caf", waitForCompletion: false))
                 
-            } else if node.name == "shark" {
-                //making the shark go away
+            } else if node.name == "fishContainer" {
+
                 
-                guard let sharkContainer = node.parent as? SKSpriteNode else {
+                guard let fishContainer = node.parent as? SKSpriteNode else {
                     continue }
                 
+                //TODO: see maybe this emitter to move to enemies
+                
                 if let emitter = SKEmitterNode(fileNamed: "waves") {
-                    emitter.position = sharkContainer.position
+                    emitter.position = fishContainer.position
                     addChild(emitter)
                 }
                 
                 node.name = ""
-                sharkContainer.physicsBody?.isDynamic = false
+                fishContainer.physicsBody?.isDynamic = false
                 
                 let scaleOut = SKAction.scale(to: 0.001, duration: 0.2)
                 let fadeOut = SKAction.fadeOut(withDuration: 0.2)
@@ -179,39 +183,40 @@ class GameScene: SKScene {
                 
                 let seq = SKAction.sequence([group, .removeFromParent()])
                 
-                if let index = activeEnemies.firstIndex(of: sharkContainer) {
-                    activeEnemies.remove(at: index)
+                if let index = allActiveAnimals.firstIndex(of: fishContainer) {
+                    allActiveAnimals.remove(at: index)
                 }
                 
                 run(SKAction.playSoundFileNamed("explosion.caf", waitForCompletion: false))
                 
-                endGame(triggeredByShark: true)
+                endGame(triggeredByFish: true)
             }
         }
     }
     
-    func endGame(triggeredByShark: Bool) {
+    func endGame(triggeredByFish: Bool) {
         guard isGameEnded == false else { return }
         
         isGameEnded = true
         physicsWorld.speed = 0
         isUserInteractionEnabled = false
         
-        sharkSoundEffect?.stop()
-        sharkSoundEffect = nil
+        enemiesSoundEffect?.stop()
+        enemiesSoundEffect = nil
         
-        if triggeredByShark {
+        if triggeredByFish {
             livesImages[0].texture = SKTexture(imageNamed: "LifeGone")
             livesImages[1].texture = SKTexture(imageNamed: "LifeGone")
             livesImages[2].texture = SKTexture(imageNamed: "LifeGone")
         }
+        
+        //TODO: make a label appear on the screen which shows that the game is over, and allows user to choose to restart
     }
     
     func playSwooshSound() {
         isSwooshSoundActive = true
         
-        let randomNumber = Int.random(in: 1...3)
-//        let soundName = "water_flow\(randomNumber).wav"
+        //TODO: water sound still has to be modified, doesn't sound right
         let soundName = "wata.mp3"
         
         let swooshSound = SKAction.playSoundFileNamed(soundName, waitForCompletion: true)
@@ -267,36 +272,36 @@ class GameScene: SKScene {
         activeSlice2.path = path.cgPath
     }
     
-    func createEnemy(forceSharks: ForceSharks = .random) {
+    func createEnemy(forceFish: ForceEnemies = .random) {
         
         let enemy: SKSpriteNode
         
-        var enemyType = Int.random(in: 1...10)
+        var animalType = Int.random(in: 1...10)
         
-        if forceSharks == .never {
-            enemyType = 1
-        } else if forceSharks == .always {
-            enemyType = 0
+        if forceFish == .never {
+            animalType = 1
+        } else if forceFish == .always {
+            animalType = 0
         }
         
-        if enemyType == 0 {
+        if animalType == 0 {
             
             enemy = SKSpriteNode()
             enemy.zPosition = 1
-            enemy.name = "sharkContainer"
+            enemy.name = "fishContainer"
             
-            let sharkImage = SKSpriteNode(imageNamed: "shark")
-            sharkImage.name = "shark"
-            enemy.addChild(sharkImage)
+            let fishImage = SKSpriteNode(imageNamed: "good1")
+            fishImage.name = "fishContainer"
+            enemy.addChild(fishImage)
             
-            if sharkSoundEffect != nil {
-                sharkSoundEffect?.stop()
-                sharkSoundEffect = nil
+            if enemiesSoundEffect != nil {
+                enemiesSoundEffect?.stop()
+                enemiesSoundEffect = nil
             }
             
             if let path = Bundle.main.url(forResource: "slicingFuse", withExtension: ".caf") {
                 if let sound = try? AVAudioPlayer(contentsOf: path) {
-                    sharkSoundEffect = sound
+                    enemiesSoundEffect = sound
                     sound.play()
                 }
             }
@@ -308,8 +313,8 @@ class GameScene: SKScene {
             
             
         } else {
-            var randomImageNo = Int.random(in: 1...3)
-            enemy = SKSpriteNode(imageNamed: "good\(randomImageNo)")
+            var randomImageNo = Int.random(in: 1...4)
+            enemy = SKSpriteNode(imageNamed: "bad\(randomImageNo)")
             run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
             enemy.name = "enemy"
         }
@@ -340,7 +345,7 @@ class GameScene: SKScene {
         enemy.physicsBody?.collisionBitMask = 0
         
         addChild(enemy)
-        activeEnemies.append(enemy)
+        allActiveAnimals.append(enemy)
     }
     
     func substractLife () {
@@ -356,7 +361,7 @@ class GameScene: SKScene {
             life = livesImages[1]
         } else {
             life = livesImages[2]
-            endGame(triggeredByShark: false)
+            endGame(triggeredByFish: false)
         }
         
         life.texture = SKTexture(imageNamed: "LifeGone")
@@ -370,8 +375,8 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         
-        if activeEnemies.count > 0 {
-            for (index, node) in activeEnemies.enumerated().reversed() {
+        if allActiveAnimals.count > 0 {
+            for (index, node) in allActiveAnimals.enumerated().reversed() {
                 if node.position.y < -140 {
                     node.removeAllActions()
                     
@@ -380,12 +385,12 @@ class GameScene: SKScene {
                         substractLife()
                         
                         node.removeFromParent()
-                        activeEnemies.remove(at: index)
+                        allActiveAnimals.remove(at: index)
                         
-                    } else if node.name == "sharkContainer" {
+                    } else if node.name == "fishContainer" {
                         node.name = ""
                         node.removeFromParent()
-                        activeEnemies.remove(at: index)
+                        allActiveAnimals.remove(at: index)
                     }
                 }
             }
@@ -398,20 +403,20 @@ class GameScene: SKScene {
             }
         }
         
-        var sharksOnScreenCount = 0
+        var fishOnScreenCount = 0
         
-        for node in activeEnemies {
-            if node.name == "sharkContainer" {
-                sharksOnScreenCount += 1
+        for node in allActiveAnimals {
+            if node.name == "fishContainer" {
+                fishOnScreenCount += 1
                 break
             }
         }
         
-        if sharksOnScreenCount == 0 {
+        if fishOnScreenCount == 0 {
             // no sounds should be made, at the push sound should be stopped
             
-            sharkSoundEffect?.stop()
-            sharkSoundEffect = nil
+            enemiesSoundEffect?.stop()
+            enemiesSoundEffect = nil
         }
     }
     
@@ -425,15 +430,15 @@ class GameScene: SKScene {
         let sequenceType = sequence[sequencePosition]
         
         switch sequenceType {
-        case .oneNoShark:
-            createEnemy(forceSharks: .never)
+        case .oneNoEnemy:
+            createEnemy(forceFish: .never)
             
         case .one:
             createEnemy()
             
-        case .twoWithOneShark:
-            createEnemy(forceSharks: .never)
-            createEnemy(forceSharks: .always)
+        case .twoWithOneEnemy:
+            createEnemy(forceFish: .never)
+            createEnemy(forceFish: .always)
             
         case .two:
             createEnemy()

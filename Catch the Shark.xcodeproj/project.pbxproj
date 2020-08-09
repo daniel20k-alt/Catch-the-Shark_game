@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE3D5DEA24E0521200AB8D4D /* waves.sks in Resources */ = {isa = PBXBuildFile; fileRef = EE3D5DE924E0521200AB8D4D /* waves.sks */; };
 		EE4CD4E224E03EF800474F76 /* splash_small.wav in Resources */ = {isa = PBXBuildFile; fileRef = EE4CD4E024E03EF800474F76 /* splash_small.wav */; };
 		EE4CD4E324E03EF800474F76 /* splash_06.wav in Resources */ = {isa = PBXBuildFile; fileRef = EE4CD4E124E03EF800474F76 /* splash_06.wav */; };
 		EE4CD4E524E03F2300474F76 /* splash_smallObject_05.wav in Resources */ = {isa = PBXBuildFile; fileRef = EE4CD4E424E03F2300474F76 /* splash_smallObject_05.wav */; };
@@ -35,6 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EE3D5DE924E0521200AB8D4D /* waves.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = waves.sks; sourceTree = "<group>"; };
 		EE4047F724D7277600844AFC /* explosion.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = explosion.caf; sourceTree = "<group>"; };
 		EE4047F824D7277600844AFC /* swoosh3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = swoosh3.caf; sourceTree = "<group>"; };
 		EE4047F924D7277600844AFC /* sliceHitEnemy.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = sliceHitEnemy.sks; sourceTree = "<group>"; };
@@ -116,11 +118,12 @@
 				EEC5118724D58F83003062A1 /* Assets.xcassets */,
 				EEC5118924D58F83003062A1 /* LaunchScreen.storyboard */,
 				EEC5118C24D58F84003062A1 /* Info.plist */,
+				EE4047F924D7277600844AFC /* sliceHitEnemy.sks */,
+				EE4047FE24D7277600844AFC /* sliceHitShark.sks */,
+				EE3D5DE924E0521200AB8D4D /* waves.sks */,
 				EE4047F724D7277600844AFC /* explosion.caf */,
 				EE4047FF24D7277600844AFC /* launch.caf */,
 				EE40480124D7277700844AFC /* slicingFuse.caf */,
-				EE4047F924D7277600844AFC /* sliceHitEnemy.sks */,
-				EE4047FE24D7277600844AFC /* sliceHitShark.sks */,
 				EE4047FA24D7277600844AFC /* swoosh1.caf */,
 				EE40480024D7277700844AFC /* swoosh2.caf */,
 				EE4047F824D7277600844AFC /* swoosh3.caf */,
@@ -210,6 +213,7 @@
 				EE84B4BD24D9233A00C91CE8 /* swoosh3.caf in Resources */,
 				EE4CD4E324E03EF800474F76 /* splash_06.wav in Resources */,
 				EE84B4BE24D9233D00C91CE8 /* whack.caf in Resources */,
+				EE3D5DEA24E0521200AB8D4D /* waves.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
