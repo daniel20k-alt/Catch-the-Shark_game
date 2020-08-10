@@ -9,13 +9,13 @@
 import AVFoundation
 import SpriteKit
 
-    enum ForceEnemies {
-        case never, always, random
-    }
+enum ForceEnemies {
+    case never, always, random
+}
 
-    enum SequenceType: CaseIterable {
-        case oneNoEnemy, one, twoWithOneEnemy, two, three, four, chain, fastChain
-    }
+enum SequenceType: CaseIterable {
+    case oneNoEnemy, one, twoWithOneEnemy, two, three, four, chain, fastChain
+}
 
 class GameScene: SKScene {
     
@@ -47,7 +47,7 @@ class GameScene: SKScene {
     var isGameEnded = false
     
     override func didMove(to view: SKView) {
-    
+        
         let randomizedBackground = Int.random(in: 1...2) //TODO: change second background dimensions, looks very bad
         let background = SKSpriteNode(imageNamed: "sea_background\(randomizedBackground)")
         background.position = CGPoint(x: 512, y: 384)
@@ -96,7 +96,7 @@ class GameScene: SKScene {
     }
     
     func createSlices() {
-//TODO: maybe modify color to be transparent or have water bubble particles instead
+        //TODO: maybe modify color to be transparent or have water bubble particles instead
         activeSlice1 = SKShapeNode()
         activeSlice1.zPosition = 2
         activeSlice1.strokeColor = UIColor(red: 72, green: 219, blue: 251, alpha: 1)
@@ -136,7 +136,6 @@ class GameScene: SKScene {
             if node.name == "enemy" {
                 
                 //destroying the creatures
-//                if let emitter = SKEmitterNode(fileNamed: "sliceHitEnemy") {
                 if let emitter = SKEmitterNode(fileNamed: "waves") {
                     emitter.position = node.position
                     emitter.particleLifetime = 1
@@ -164,13 +163,13 @@ class GameScene: SKScene {
                 run(SKAction.playSoundFileNamed("splash_small.wav", waitForCompletion: false))
                 
             } else if node.name == "fishContainer" {
-
+                
                 
                 guard let fishContainer = node.parent as? SKSpriteNode else {
                     continue }
                 
                 //TODO: see maybe this emitter to move to enemies
-
+                
                 if let emitter = SKEmitterNode(fileNamed: "waves") {
                     emitter.position = fishContainer.position
                     addChild(emitter)
@@ -189,7 +188,7 @@ class GameScene: SKScene {
                     allActiveAnimals.remove(at: index)
                 }
                 
-                run(SKAction.playSoundFileNamed("splash_06.wav", waitForCompletion: false))
+                run(SKAction.playSoundFileNamed("splash.wav", waitForCompletion: false))
                 
                 endGame(triggeredByFish: true)
             }
@@ -300,188 +299,175 @@ class GameScene: SKScene {
                 enemiesSoundEffect?.stop()
                 enemiesSoundEffect = nil
             }
-            
-            if let path = Bundle.main.url(forResource: "slicingFuse", withExtension: ".caf") {
-                if let sound = try? AVAudioPlayer(contentsOf: path) {
-                    enemiesSoundEffect = sound
-                    sound.play()
-                }
-            }
-            
-            if let emitter = SKEmitterNode(fileNamed: "sliceFuse") {
-                emitter.position = CGPoint(x: 76, y: 64)
-                enemy.addChild(emitter)
-            }
-            
-            
-        } else {
-            var randomImageNo = Int.random(in: 1...4)
-            enemy = SKSpriteNode(imageNamed: "bad\(randomImageNo)")
-            run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
-            enemy.name = "enemy"
-        }
         
-        //the position of each creature will be here, theoretically
-        let randomPosition = CGPoint(x: Int.random(in: 64...960), y: -128)
-        enemy.position = randomPosition
-        
-        let randomAngularVelocity = CGFloat.random(in: -3...3)
-        let randomXVelocity: Int
-        
-        if randomPosition.x < 256 {
-            randomXVelocity = Int.random(in: 8...15)
-        } else if randomPosition.x < 512 {
-            randomXVelocity = Int.random(in: 3...5)
-        } else if randomPosition.x < 768 {
-            randomXVelocity = -Int.random(in: 3...5)
-        } else {
-            randomXVelocity = -Int.random(in: 8...15)
-        }
-        
-        let randomYVelocity = Int.random(in: 24...32)
-        
-        
-        enemy.physicsBody = SKPhysicsBody(circleOfRadius: 64)
-        enemy.physicsBody?.velocity = CGVector(dx: randomXVelocity * 40, dy: randomYVelocity * 40)
-        enemy.physicsBody?.angularVelocity = randomAngularVelocity
-        enemy.physicsBody?.collisionBitMask = 0
-        
-        addChild(enemy)
-        allActiveAnimals.append(enemy)
+    } else {
+    var randomImageNo = Int.random(in: 1...4)
+    enemy = SKSpriteNode(imageNamed: "bad\(randomImageNo)")
+    run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
+    enemy.name = "enemy"
     }
     
-    func substractLife () {
-        lives -= 1
-        
-        run(SKAction.playSoundFileNamed("wrong.caf", waitForCompletion: false))
-        
-        var life: SKSpriteNode
-        
-        if lives == 2 {
-            life = livesImages[0]
-        } else if lives == 1 {
-            life = livesImages[1]
-        } else {
-            life = livesImages[2]
-            endGame(triggeredByFish: false)
-        }
-        
-        life.texture = SKTexture(imageNamed: "LifeGone")
-        life.xScale = 1.3
-        life.yScale = 1.3
-        life.run(SKAction.scale(to: 1, duration: 0.1))
-        
-        
-        
+    //the position of each creature will be here, theoretically
+    let randomPosition = CGPoint(x: Int.random(in: 64...960), y: -128)
+    enemy.position = randomPosition
+    
+    let randomAngularVelocity = CGFloat.random(in: -3...3)
+    let randomXVelocity: Int
+    
+    if randomPosition.x < 256 {
+    randomXVelocity = Int.random(in: 8...15)
+    } else if randomPosition.x < 512 {
+    randomXVelocity = Int.random(in: 3...5)
+    } else if randomPosition.x < 768 {
+    randomXVelocity = -Int.random(in: 3...5)
+    } else {
+    randomXVelocity = -Int.random(in: 8...15)
     }
     
-    override func update(_ currentTime: TimeInterval) {
-        
-        if allActiveAnimals.count > 0 {
-            for (index, node) in allActiveAnimals.enumerated().reversed() {
-                if node.position.y < -140 {
-                    node.removeAllActions()
+    let randomYVelocity = Int.random(in: 24...32)
+    
+    
+    enemy.physicsBody = SKPhysicsBody(circleOfRadius: 64)
+    enemy.physicsBody?.velocity = CGVector(dx: randomXVelocity * 40, dy: randomYVelocity * 40)
+    enemy.physicsBody?.angularVelocity = randomAngularVelocity
+    enemy.physicsBody?.collisionBitMask = 0
+    
+    addChild(enemy)
+    allActiveAnimals.append(enemy)
+}
+
+func substractLife () {
+    lives -= 1
+    
+    run(SKAction.playSoundFileNamed("wrong.caf", waitForCompletion: false))
+    
+    var life: SKSpriteNode
+    
+    if lives == 2 {
+        life = livesImages[0]
+    } else if lives == 1 {
+        life = livesImages[1]
+    } else {
+        life = livesImages[2]
+        endGame(triggeredByFish: false)
+    }
+    
+    life.texture = SKTexture(imageNamed: "LifeGone")
+    life.xScale = 1.3
+    life.yScale = 1.3
+    life.run(SKAction.scale(to: 1, duration: 0.1))
+    
+    
+    
+}
+
+override func update(_ currentTime: TimeInterval) {
+    
+    if allActiveAnimals.count > 0 {
+        for (index, node) in allActiveAnimals.enumerated().reversed() {
+            if node.position.y < -140 {
+                node.removeAllActions()
+                
+                if node.name == "enemy" {
+                    node.name = ""
+                    substractLife()
                     
-                    if node.name == "enemy" {
-                        node.name = ""
-                        substractLife()
-                        
-                        node.removeFromParent()
-                        allActiveAnimals.remove(at: index)
-                        
-                    } else if node.name == "fishContainer" {
-                        node.name = ""
-                        node.removeFromParent()
-                        allActiveAnimals.remove(at: index)
-                    }
+                    node.removeFromParent()
+                    allActiveAnimals.remove(at: index)
+                    
+                } else if node.name == "fishContainer" {
+                    node.name = ""
+                    node.removeFromParent()
+                    allActiveAnimals.remove(at: index)
                 }
             }
-        } else {
-            if !nextSequenceQueued {
-                DispatchQueue.main.asyncAfter(deadline: .now() + popupTime) {
-                    [weak self] in self?.tossEnemies()
-                }
-                nextSequenceQueued = true
-            }
         }
-        
-        var fishOnScreenCount = 0
-        
-        for node in allActiveAnimals {
-            if node.name == "fishContainer" {
-                fishOnScreenCount += 1
-                break
+    } else {
+        if !nextSequenceQueued {
+            DispatchQueue.main.asyncAfter(deadline: .now() + popupTime) {
+                [weak self] in self?.tossEnemies()
             }
-        }
-        
-        if fishOnScreenCount == 0 {
-            // no sounds should be made, at the push sound should be stopped
-            
-            enemiesSoundEffect?.stop()
-            enemiesSoundEffect = nil
+            nextSequenceQueued = true
         }
     }
     
-    func tossEnemies() {
-        guard isGameEnded == false else { return }
-        
-        popupTime *= 0.991
-        chainDelay *= 0.99
-        physicsWorld.speed *= 1.02
-        
-        let sequenceType = sequence[sequencePosition]
-        
-        switch sequenceType {
-        case .oneNoEnemy:
-            createEnemy(forceFish: .never)
-            
-        case .one:
-            createEnemy()
-            
-        case .twoWithOneEnemy:
-            createEnemy(forceFish: .never)
-            createEnemy(forceFish: .always)
-            
-        case .two:
-            createEnemy()
-            createEnemy()
-            
-        case .three:
-            createEnemy()
-            createEnemy()
-            createEnemy()
-            
-        case .four:
-            createEnemy()
-            createEnemy()
-            createEnemy()
-            createEnemy()
-            
-        case .chain:
-            createEnemy()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0)) {
-                [weak self] in self?.createEnemy() }
-            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * 2)) {
-                [weak self] in self?.createEnemy() }
-            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * 3)) {
-                [weak self] in self?.createEnemy() }
-            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * 4)) {
-                [weak self] in self?.createEnemy() }
-            
-        case .fastChain:
-            createEnemy()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0)) {
-                [weak self] in self?.createEnemy() }
-            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0 * 2)) {
-                [weak self] in self?.createEnemy() }
-            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0 * 3)) {
-                [weak self] in self?.createEnemy() }
-            DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0 * 4)) {
-                [weak self] in self?.createEnemy() }
+    var fishOnScreenCount = 0
+    
+    for node in allActiveAnimals {
+        if node.name == "fishContainer" {
+            fishOnScreenCount += 1
+            break
         }
-        sequencePosition += 1
-        nextSequenceQueued = false
     }
+    
+    if fishOnScreenCount == 0 {
+        // no sounds should be made, at the push sound should be stopped
+        
+        enemiesSoundEffect?.stop()
+        enemiesSoundEffect = nil
+    }
+}
+
+func tossEnemies() {
+    guard isGameEnded == false else { return }
+    
+    popupTime *= 0.991
+    chainDelay *= 0.99
+    physicsWorld.speed *= 1.02
+    
+    let sequenceType = sequence[sequencePosition]
+    
+    switch sequenceType {
+    case .oneNoEnemy:
+        createEnemy(forceFish: .never)
+        
+    case .one:
+        createEnemy()
+        
+    case .twoWithOneEnemy:
+        createEnemy(forceFish: .never)
+        createEnemy(forceFish: .always)
+        
+    case .two:
+        createEnemy()
+        createEnemy()
+        
+    case .three:
+        createEnemy()
+        createEnemy()
+        createEnemy()
+        
+    case .four:
+        createEnemy()
+        createEnemy()
+        createEnemy()
+        createEnemy()
+        
+    case .chain:
+        createEnemy()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0)) {
+            [weak self] in self?.createEnemy() }
+        DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * 2)) {
+            [weak self] in self?.createEnemy() }
+        DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * 3)) {
+            [weak self] in self?.createEnemy() }
+        DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 5.0 * 4)) {
+            [weak self] in self?.createEnemy() }
+        
+    case .fastChain:
+        createEnemy()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0)) {
+            [weak self] in self?.createEnemy() }
+        DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0 * 2)) {
+            [weak self] in self?.createEnemy() }
+        DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0 * 3)) {
+            [weak self] in self?.createEnemy() }
+        DispatchQueue.main.asyncAfter(deadline: .now() + (chainDelay / 10.0 * 4)) {
+            [weak self] in self?.createEnemy() }
+    }
+    sequencePosition += 1
+    nextSequenceQueued = false
+}
 }
