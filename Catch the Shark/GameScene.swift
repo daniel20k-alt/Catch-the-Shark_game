@@ -136,8 +136,10 @@ class GameScene: SKScene {
             if node.name == "enemy" {
                 
                 //destroying the creatures
-                if let emitter = SKEmitterNode(fileNamed: "sliceHitEnemy") {
+//                if let emitter = SKEmitterNode(fileNamed: "sliceHitEnemy") {
+                if let emitter = SKEmitterNode(fileNamed: "waves") {
                     emitter.position = node.position
+                    emitter.particleLifetime = 1
                     addChild(emitter)
                 }
                 
@@ -159,7 +161,7 @@ class GameScene: SKScene {
                     allActiveAnimals.remove(at: index)
                 }
                 
-                run(SKAction.playSoundFileNamed("whack.caf", waitForCompletion: false))
+                run(SKAction.playSoundFileNamed("splash_small.wav", waitForCompletion: false))
                 
             } else if node.name == "fishContainer" {
 
@@ -168,7 +170,7 @@ class GameScene: SKScene {
                     continue }
                 
                 //TODO: see maybe this emitter to move to enemies
-                
+
                 if let emitter = SKEmitterNode(fileNamed: "waves") {
                     emitter.position = fishContainer.position
                     addChild(emitter)
@@ -187,7 +189,7 @@ class GameScene: SKScene {
                     allActiveAnimals.remove(at: index)
                 }
                 
-                run(SKAction.playSoundFileNamed("explosion.caf", waitForCompletion: false))
+                run(SKAction.playSoundFileNamed("splash_06.wav", waitForCompletion: false))
                 
                 endGame(triggeredByFish: true)
             }
@@ -217,7 +219,7 @@ class GameScene: SKScene {
         isSwooshSoundActive = true
         
         //TODO: water sound still has to be modified, doesn't sound right
-        let soundName = "wata.mp3"
+        let soundName = "water_flow_tide.mp3"
         
         let swooshSound = SKAction.playSoundFileNamed(soundName, waitForCompletion: true)
         

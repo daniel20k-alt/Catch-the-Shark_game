@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EE3D5DEA24E0521200AB8D4D /* waves.sks in Resources */ = {isa = PBXBuildFile; fileRef = EE3D5DE924E0521200AB8D4D /* waves.sks */; };
+		EE3D5DEC24E1106200AB8D4D /* water_flow_tide.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EE3D5DEB24E1106200AB8D4D /* water_flow_tide.mp3 */; };
 		EE4CD4E224E03EF800474F76 /* splash_small.wav in Resources */ = {isa = PBXBuildFile; fileRef = EE4CD4E024E03EF800474F76 /* splash_small.wav */; };
 		EE4CD4E324E03EF800474F76 /* splash_06.wav in Resources */ = {isa = PBXBuildFile; fileRef = EE4CD4E124E03EF800474F76 /* splash_06.wav */; };
 		EE4CD4E524E03F2300474F76 /* splash_smallObject_05.wav in Resources */ = {isa = PBXBuildFile; fileRef = EE4CD4E424E03F2300474F76 /* splash_smallObject_05.wav */; };
@@ -17,11 +18,9 @@
 		EE4CD4EF24E040D300474F76 /* water_flow3.wav in Resources */ = {isa = PBXBuildFile; fileRef = EE4CD4EC24E040D200474F76 /* water_flow3.wav */; };
 		EE4CD4F024E040D300474F76 /* water_flow2.wav in Resources */ = {isa = PBXBuildFile; fileRef = EE4CD4ED24E040D200474F76 /* water_flow2.wav */; };
 		EE4CD4F124E040D300474F76 /* water_flow1.wav in Resources */ = {isa = PBXBuildFile; fileRef = EE4CD4EE24E040D200474F76 /* water_flow1.wav */; };
-		EE4CD4F424E0451E00474F76 /* wata.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EE4CD4F324E0451E00474F76 /* wata.mp3 */; };
 		EE84B4BB24D9233300C91CE8 /* swoosh1.caf in Resources */ = {isa = PBXBuildFile; fileRef = EE4047FA24D7277600844AFC /* swoosh1.caf */; };
 		EE84B4BC24D9233700C91CE8 /* swoosh2.caf in Resources */ = {isa = PBXBuildFile; fileRef = EE40480024D7277700844AFC /* swoosh2.caf */; };
 		EE84B4BD24D9233A00C91CE8 /* swoosh3.caf in Resources */ = {isa = PBXBuildFile; fileRef = EE4047F824D7277600844AFC /* swoosh3.caf */; };
-		EE84B4BE24D9233D00C91CE8 /* whack.caf in Resources */ = {isa = PBXBuildFile; fileRef = EE4047FB24D7277600844AFC /* whack.caf */; };
 		EE84B4BF24D9236300C91CE8 /* wrong.caf in Resources */ = {isa = PBXBuildFile; fileRef = EE4047FC24D7277600844AFC /* wrong.caf */; };
 		EE84B4C024D9236800C91CE8 /* slicingFuse.caf in Resources */ = {isa = PBXBuildFile; fileRef = EE40480124D7277700844AFC /* slicingFuse.caf */; };
 		EE84B4C124D9236B00C91CE8 /* launch.caf in Resources */ = {isa = PBXBuildFile; fileRef = EE4047FF24D7277600844AFC /* launch.caf */; };
@@ -37,11 +36,11 @@
 
 /* Begin PBXFileReference section */
 		EE3D5DE924E0521200AB8D4D /* waves.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = waves.sks; sourceTree = "<group>"; };
+		EE3D5DEB24E1106200AB8D4D /* water_flow_tide.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = water_flow_tide.mp3; path = "../../Downloads/Water sounds/water_flow_tide.mp3"; sourceTree = "<group>"; };
 		EE4047F724D7277600844AFC /* explosion.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = explosion.caf; sourceTree = "<group>"; };
 		EE4047F824D7277600844AFC /* swoosh3.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = swoosh3.caf; sourceTree = "<group>"; };
 		EE4047F924D7277600844AFC /* sliceHitEnemy.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = sliceHitEnemy.sks; sourceTree = "<group>"; };
 		EE4047FA24D7277600844AFC /* swoosh1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = swoosh1.caf; sourceTree = "<group>"; };
-		EE4047FB24D7277600844AFC /* whack.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whack.caf; sourceTree = "<group>"; };
 		EE4047FC24D7277600844AFC /* wrong.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = wrong.caf; sourceTree = "<group>"; };
 		EE4047FE24D7277600844AFC /* sliceHitShark.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = sliceHitShark.sks; sourceTree = "<group>"; };
 		EE4047FF24D7277600844AFC /* launch.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = launch.caf; sourceTree = "<group>"; };
@@ -57,7 +56,6 @@
 		EE4CD4ED24E040D200474F76 /* water_flow2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = water_flow2.wav; path = "../../Downloads/Water sounds/water_flow2.wav"; sourceTree = "<group>"; };
 		EE4CD4EE24E040D200474F76 /* water_flow1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = water_flow1.wav; path = "../../Downloads/Water sounds/water_flow1.wav"; sourceTree = "<group>"; };
 		EE4CD4F224E0443200474F76 /* water_slow.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = water_slow.m4a; path = "../../Downloads/Water sounds/water_slow.m4a"; sourceTree = "<group>"; };
-		EE4CD4F324E0451E00474F76 /* wata.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = wata.mp3; path = "../../Downloads/Water sounds/wata.mp3"; sourceTree = "<group>"; };
 		EEC5117724D58F4C003062A1 /* Catch the Shark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Catch the Shark.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEC5117A24D58F4C003062A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EEC5117C24D58F4C003062A1 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -95,7 +93,7 @@
 				EE4CD4ED24E040D200474F76 /* water_flow2.wav */,
 				EE4CD4EC24E040D200474F76 /* water_flow3.wav */,
 				EE4CD4F224E0443200474F76 /* water_slow.m4a */,
-				EE4CD4F324E0451E00474F76 /* wata.mp3 */,
+				EE3D5DEB24E1106200AB8D4D /* water_flow_tide.mp3 */,
 			);
 			sourceTree = "<group>";
 		};
@@ -127,7 +125,6 @@
 				EE4047FA24D7277600844AFC /* swoosh1.caf */,
 				EE40480024D7277700844AFC /* swoosh2.caf */,
 				EE4047F824D7277600844AFC /* swoosh3.caf */,
-				EE4047FB24D7277600844AFC /* whack.caf */,
 				EE4047FC24D7277600844AFC /* wrong.caf */,
 			);
 			path = "Catch the Shark";
@@ -195,9 +192,9 @@
 				EE84B4C124D9236B00C91CE8 /* launch.caf in Resources */,
 				EEC5118624D58F4C003062A1 /* Main.storyboard in Resources */,
 				EE4CD4E524E03F2300474F76 /* splash_smallObject_05.wav in Resources */,
+				EE3D5DEC24E1106200AB8D4D /* water_flow_tide.mp3 in Resources */,
 				EE4CD4EA24E03F3600474F76 /* splash_smallObject_02.wav in Resources */,
 				EE4CD4F024E040D300474F76 /* water_flow2.wav in Resources */,
-				EE4CD4F424E0451E00474F76 /* wata.mp3 in Resources */,
 				EE84B4BB24D9233300C91CE8 /* swoosh1.caf in Resources */,
 				EE84B4BC24D9233700C91CE8 /* swoosh2.caf in Resources */,
 				EEC5117D24D58F4C003062A1 /* GameScene.sks in Resources */,
@@ -212,7 +209,6 @@
 				EEC5118B24D58F84003062A1 /* LaunchScreen.storyboard in Resources */,
 				EE84B4BD24D9233A00C91CE8 /* swoosh3.caf in Resources */,
 				EE4CD4E324E03EF800474F76 /* splash_06.wav in Resources */,
-				EE84B4BE24D9233D00C91CE8 /* whack.caf in Resources */,
 				EE3D5DEA24E0521200AB8D4D /* waves.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
