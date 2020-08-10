@@ -301,7 +301,7 @@ class GameScene: SKScene {
             }
         
     } else {
-    var randomImageNo = Int.random(in: 1...4)
+    var randomImageNo = Int.random(in: 1...6)
     enemy = SKSpriteNode(imageNamed: "bad\(randomImageNo)")
     run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
     enemy.name = "enemy"
