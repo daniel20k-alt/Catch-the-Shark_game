@@ -291,7 +291,8 @@ class GameScene: SKScene {
             enemy.zPosition = 1
             enemy.name = "fishContainer"
             
-            let fishImage = SKSpriteNode(imageNamed: "good1")
+            var randomFishNo = Int.random(in: 1...2)
+            let fishImage = SKSpriteNode(imageNamed: "good\(randomFishNo)")
             fishImage.name = "fishContainer"
             enemy.addChild(fishImage)
             
@@ -301,7 +302,7 @@ class GameScene: SKScene {
             }
         
     } else {
-    var randomImageNo = Int.random(in: 1...6)
+    var randomImageNo = Int.random(in: 1...7)
     enemy = SKSpriteNode(imageNamed: "bad\(randomImageNo)")
     run(SKAction.playSoundFileNamed("launch.caf", waitForCompletion: false))
     enemy.name = "enemy"
